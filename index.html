@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Phone Book</title>
+
+	<style>
+		
+		@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,600;0,700;1,200;1,300;1,600&display=swap');
+
+		 *{
+		 	padding: 0;
+		 	margin: 0;
+		 	box-sizing: border-box;
+
+		 }
+		 
+		 body{
+		 	font-family: 'Nunito', sans-serif;
+		 	min-height: 100vh;
+		 	background-color:lightgray;
+
+		 }
+		 h1,h2,h3,h4{
+		 	color: darkblue;
+		 }
+		 input,button{
+		 	outline: 0;
+		 	font-family: inherit;
+		 	font-size: 16px;
+		 	border: none;
+		 }
+		 button{
+		 	cursor: pointer;
+		 }
+
+		 #fullscreen-div{
+	
+		 	top: 0;
+		 	left: 0;
+		 	background-color: rgba(0, 0, 0, 0.2);
+		 	width: 100%;
+		 	height: 100%;
+		 	z-index: 1;
+		 	
+		 }
+		 .contact-form{
+		 	background-color: #fff;
+		 	border-radius: 6px;
+		 	overflow: hidden;
+		 	position: fixed;
+		 	top: 50px;
+		 	left: 50%;
+		 	transform: translate(-50%);
+		 	box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.2    );
+		 	display: none;
+		 } 
+		 .form-head{
+		 	background-color: blue;
+		 	padding: 40px 60px;
+		 	font-size: 35px;
+		 	color: #fff;
+		 	position: relative;
+		 }
+		 .form-head h3{
+		 	color: #fff;
+		 }
+		 .form-close-btn{
+		 	background-color: transparent;
+		 	font-size: 20px;
+		 	position: absolute;
+		 	right: 50px;
+		 	top: 20px;
+		 	display: block;
+		 	align-items: center;
+		 	justify-content: center;
+		 	background-color: #fff;
+		 	color: grey;
+		 	height: 30px;
+		 	width: 30px;
+		 	border-radius: 50%;
+
+		 }
+
+		 .form-close-btn:hover{
+		 	transform: scale(2.2);
+		 }
+		 .form-main{
+		 	padding: 1.2px 8.4px 1px 2.4px;
+		 	max-width: 680px;
+		 	min-width: 550px;
+		 }
+		 .form-row{
+		 	margin-bottom: 1.2px;
+		 }
+		 .roem-grid-row{
+		 	display:grid;
+		 	
+		 }
+		 .form-col label{
+		 	display: block;
+		 	font-weight: 800;
+		 	color: blue;
+		 	margin-bottom: 50px;
+		 }
+		 .form-col input, .form-col select{
+		 	border: 1px solid rgba(184, 183, 188, 0.5);
+		 	border-radius: 3px;
+		 	padding: 7.5px 7.8px;
+		 	font-size: 1rem;
+		 	font-family: inherit;
+		 	outline: 0;
+		 	width: 100%;
+		 }
+		 #form-btn button{
+		 	font-size: 18px;
+		 	color: #fff;
+		 	border-radius: 4px;
+		 	padding: 10px 40px;
+		 	transition:  400px;
+		 }
+		 #form-btn button:hover{
+		 	transform: translateY(6px);
+
+		 }
+		 #form-save-btn, #update-btn{
+		 	box-shadow: 0 2px 0 0 blue;
+		 	background-color: blue;
+		 	margin-right: 1.6px;
+		 	color: white;
+		 
+		 }
+		 #form-save-btn:hover, #update-btn:hover{
+		 	box-shadow: 0 2px 0 0 #blue;
+
+		 }
+
+         #delete-btn{
+         	background-color: #d33c41;
+         	box-shadow: 0 2px 0 0 blue;
+         }
+         #delete-btn:hover{
+         	box-shadow: 0 1px 0 0 blue ;
+
+         }
+         .contact-form{
+         	display: block;
+         	padding: 20px;
+         	margin: 0 auto;
+         	max-width: 1200px;
+         	min-height: 700px;
+         	display: none;
+		}
+		.phone-book-content{
+			background-color: #fff;
+			padding: 15px;
+			border-radius: 4px;
+		}
+		.phone-book-head{
+			padding-top:50.5px ;
+			margin-bottom: 2px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 50px;
+		}
+		.phone-book-head h2{
+			font-size: 2.2rem;
+
+		}
+		.phone-book-head i{
+			color: blue;
+			margin-right: 1px;
+		}
+		.contact-list{
+			padding: 3px 0;
+
+		}
+		.contact-list .add-contact-btn{
+			color: #fff;
+			padding: 10.8px;
+			border-radius: 3px;
+			transition:  200px;
+			background-color: blue;
+			box-shadow: 0 2px 0 0 blue;
+			font-size: 	20px;
+		}
+
+
+         .contact-list .add-contact-btn:hover{
+         	cursor: pointer;
+         	transform: translateY(1px);
+         	box-shadow: 0 1px 0 0 blue;
+         }
+         .phone-book-list{
+         	margin: 10px;
+         	min-height: 450px;
+         }
+         .phone-table{
+         	margin-top: 30px;
+         	width: 100%;
+         	text-align: left;
+         	border-collapse: collapse;
+         }
+         .phone-table thead{
+         	border-bottom: 5px solid #e3e4f1;
+         	font-size: 	20px;
+
+         }
+         .phone-table thead tr th{
+         	padding-bottom: 0.8px;
+         }
+         .phone-table tbody td{
+         	padding: 20px 0;
+         	color: rgba(0, 0, 0, 0.6);
+         	font-weight: 600px;
+
+         }
+         .phone-table tbody td{
+         	padding-left: 0.5px;
+         	padding-right: 1px;
+         }
+         .phone-table tbody td{
+         	font-weight: 800;
+         }
+         .phone-table tbody tr{
+         	cursor: pointer;
+         }
+         .phone-table tbody tr:hover{
+         	background-color: lightblue;
+         	transition: 200px;
+         }
+
+         .phone-contact-button {
+         	display: none !important;
+         }
+
+
+          /* Footer styles */
+         footer {
+           background-color: #333; 
+          color: #fff; 
+          text-align: center;
+          padding: 10px 0; 
+          position: absolute;
+          bottom: 2; 
+          width: 100%; 
+          }
+
+         .author-name {
+           font-weight: bold;
+           color: #f8c700; 
+          }
+
+        
+	</style>
+	
+</head>
+<body>
+
+	<div id="fullscreen-div"></div>
+
+	<div class="phone-book" id="phone-book">
+
+		 <!-- Footer -->
+        <footer>
+            Powered by <span class="author-name">Eugene Boyah</span>
+        </footer>
+
+     	<div class="phone-book-content">
+     		<div class="phone-book-head">
+     			<i class="fa fa-phone" aria-hidden="true"></i>
+     			<h3> 📞 Phone<span>Book</span> </h3>
+     		</div>
+
+
+
+
+
+     		<div class="contact-list">
+     			<button class="add-contact-btn">+ Add contact</button> 
+
+	     		<div class="phone-book-list" id="phone-book-list">
+	     			<table class="phone-table">
+	     				<thead>
+	     					<tr>
+	     						
+	     						<th>First Name</th>
+	     						<th>Last Name</th>
+	     						<th>Contact</th>
+	     						<th>Adress</th>
+	     						<th>Email</th>
+	     					</tr>
+	     				</thead>
+	     				<tbody>
+	     					<tr>
+	     					
+	     						<td>Eugene</td>
+	     						<td>Boyah</td>
+	     						<td>0775923075</td>
+	     						<td>old road</td>
+	     							<td>eugene123@gmail.com</td>
+	     					</tr>
+	     					<tr>
+	     				
+	     						<td>Eugene</td>
+	     						<td>Boyah</td>
+	     						<td>0775923075</td>
+	     						<td>old road</td>
+	     							<td>eugene123@gmail.com</td>
+
+	     					</tr>
+	     					<tr>
+	     				
+	     						<td>Eugene</td>
+	     						<td>Boyah</td>
+	     						<td>0775923075</td>
+	     						<td>old road</td>
+	     						<td>eugene123@gmail.com</td>
+	     					</tr>
+	     				</tbody>
+	     			</table>
+
+	     		</div>
+     		</div>
+
+
+
+
+
+    	</div>
+    </div>
+
+    <form class="contact-form">
+	    <div class="form-content">
+	    	<div class="form-head">
+	    		<h3>Add Contact</h3>
+	    		<button type="button" class="form-close-btn">❌</button>
+	    	</div>
+	    	<div class="form-main">
+	    		<div class="form-row grid-row">
+	    			<div class="form-col">
+	    				<label for="">First Name</label>
+	    				<input type="text" placeholder="First Name" class="form-control" name="first_name">
+	    			</div>
+
+	    			<div class="form-col">
+	    				<label for="">Last Name</label>
+	    				<input type="text" placeholder="Last Name" class="form-control" name="last_name">
+	    			</div>
+	    		</div>
+
+	    		<div class="form-row grid-row">
+	    			<div class="form-col">
+	    				<label for="">phone</label>
+	    				<input type="text" placeholder="Phone Number" class="form-control" name="Phone">
+	    			</div>
+
+	    			<div class="form-col">
+	    				<label for="">Email</label>
+	    				<input type="Email" placeholder="Your Email" class="form-control" name="email">
+	    			</div>
+	    		</div>
+
+	    		<div class="form-row grid-row">
+	    			<div class="form-col">
+	    				<label for="">Adress</label>
+	    				<input type="text" placeholder="Adress" class="form-control" name="adress">
+	    			</div>
+
+	    		<div class="form-row" id="form-btn">
+	    			<button  type ="sumit" id="form-save-btn">Save</button>
+	    		</div>
+	    </div>
+	</form>
+
+     	<script type="text/javascript">
+
+     		
+     		
+
+     		const addContactBtn = document.querySelector('.add-contact-btn');
+     		const contactForm = document.querySelector('.contact-form');
+     		const contactList = document.querySelector('.contact-list');
+     		const modelRow = document.querySelector('.form-row');
+     		const closeBtn = document.querySelector('.form-close-btn');
+     		const form = document.querySelector('form');
+
+
+
+
+
+     		addContactBtn.addEventListener('click', displayContactForm)
+     		
+     		closeBtn.addEventListener('click', displayContactList)
+
+     		
+     		
+
+     		function displayContactForm(){
+     			console.log('its work');
+     			contactForm.style.display = "block";
+     			contactList.style.display = "none";
+     		}
+
+
+			function displayContactList(){
+				contactList.style.display = "block";
+				contactForm.style.display = "none"
+			}
+
+			
+            document.addEventListener("DOMContentLoaded", function() {
+              // Get references to HTML elements
+               const form = document.querySelector(".contact-form");
+               const addButton = document.querySelector(".add-contact-btn");
+               const contactList = document.querySelector(".phone-table tbody");
+  
+            // Handle form submission
+            form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+              // Get input values from the form
+               const firstName = form.querySelector("[name='first_name']").value;
+               const lastName = form.querySelector("[name='last_name']").value;
+               const phone = form.querySelector("[name='Phone']").value;
+               const adress = form.querySelector("[name='adress']").value;
+               const email = form.querySelector("[name='email']").value;
+
+
+
+      
+
+            // Create a new table row for the contact
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+               
+                <td>${firstName}</td>
+                <td>${lastName}</td>
+                <td>${phone}</td>
+                <td>${adress}</td>
+                <td>${email}</td>
+      
+    `;
+
+    // Append the new row to the contact list
+    contactList.appendChild(newRow);
+
+    // Clear the form inputs
+    form.reset();
+  });
+
+});
+
+	
+     	</script>
+    </body>
+</html>
