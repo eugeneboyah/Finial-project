@@ -9,6 +9,12 @@
 		
 		@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,600;0,700;1,200;1,300;1,600&display=swap');
 
+		@media (max-width: 768px) {
+       .form-main {
+          max-width: 100%; /* Adjust form width for smaller screens */
+       }
+      }
+
 		 *{
 		 	padding: 0;
 		 	margin: 0;
@@ -22,6 +28,7 @@
 		 	min-height: 100vh;
 		 	background-color:lightgray;
 		 	width: 	100%;
+		 	overflow-x: hidden;
 
 		 }
 		 h1,h2,h3,h4{
@@ -57,7 +64,7 @@
 		 	transform: translate(-50%);
 		 	box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.2    );
 		 	display: none;
-		 	
+		 	width
 		 } 
 		 .form-head{
 		 	background-color: blue;
@@ -256,7 +263,40 @@
            color: #f8c700; 
           }
 
-        
+      
+.edit-contact-btn,
+.delete-contact-btn {
+  padding: 5px 10px;
+  
+
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+
+
+
+.edit-contact-btn {
+  background-color:lightseagreen;
+}
+
+
+.edit-contact-btn:hover {
+  background-color: green;
+}
+
+
+.delete-contact-btn {
+  background-color: red;
+}
+
+
+.delete-contact-btn:hover {
+  background-color: grey;
+}
 
         
 	</style>
@@ -305,7 +345,9 @@
 	     						<td>Boyah</td>
 	     						<td>0775923075</td>
 	     						<td>old road</td>
-	     							<td>eugene123@gmail.com</td>
+	     						<td>eugene123@gmail.com</td>
+	     						<td><button class="edit-contact-btn">Edit</button></td>
+  							  <td><button class="delete-contact-btn">Delete</button></td>
 	     					</tr>
 	     					<tr>
 	     				
@@ -313,7 +355,9 @@
 	     						<td>Boyah</td>
 	     						<td>0775923075</td>
 	     						<td>old road</td>
-	     							<td>eugene123@gmail.com</td>
+	     						<td>eugene123@gmail.com</td>
+	     					    <td><button class="edit-contact-btn">Edit</button></td>
+                                <td><button class="delete-contact-btn">Delete</button></td>
 
 	     					</tr>
 	     					<tr>
@@ -323,6 +367,8 @@
 	     						<td>0775923075</td>
 	     						<td>old road</td>
 	     						<td>eugene123@gmail.com</td>
+	     						<td><button class="edit-contact-btn">Edit</button></td>
+                                <td><button class="delete-contact-btn">Delete</button></td>
 	     					</tr>
 	     				</tbody>
 	     			</table>
@@ -446,6 +492,8 @@
                 <td>${phone}</td>
                 <td>${adress}</td>
                 <td>${email}</td>
+                <td><button class="edit-contact-btn">Edit</button></td>
+                <td><button class="delete-contact-btn">Delete</button></td>
       
     `;
 
@@ -457,6 +505,59 @@
   });
 
 });
+
+
+            document.addEventListener("DOMContentLoaded", function() {
+    // ... (previous code)
+
+    // Handle the click event on the contact list (where the Edit and Delete buttons are)
+    contactList.addEventListener("click", function(event) {
+        if (event.target.classList.contains("edit-contact-btn")) {
+            // Get the row that contains the Edit button
+            const row = event.target.closest("tr");
+
+            // Call the editContact function with the selected row
+            editContact(row);
+        }
+
+        if (event.target.classList.contains("delete-contact-btn")) {
+            // Get the row that contains the Delete button
+            const row = event.target.closest("tr");
+
+            // Call the deleteContact function with the selected row
+            deleteContact(row);
+        }
+    });
+});
+
+// Function to handle editing a contact
+function editContact(row) {
+    // Extract data from the selected row for editing
+    const firstName = row.cells[0].textContent;
+    const lastName = row.cells[1].textContent;
+    const phone = row.cells[2].textContent;
+    const address = row.cells[3].textContent;
+    const email = row.cells[4].textContent;
+
+    // Populate the form fields with the extracted data for editing
+    document.querySelector("[name='first_name']").value = firstName;
+    document.querySelector("[name='last_name']").value = lastName;
+    document.querySelector("[name='Phone']").value = phone;
+    document.querySelector("[name='adress']").value = address;
+    document.querySelector("[name='email']").value = email;
+
+
+    // Display the contact editing form
+    displayContactForm();
+
+    
+}
+
+// Function to handle deleting a contact
+function deleteContact(row) {
+    // Remove the row from the contact list
+    row.parentNode.removeChild(row);
+}
 
 	
      	</script>
